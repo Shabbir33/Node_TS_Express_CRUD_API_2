@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import Author from "../models/Author";
+import Logging from "../library/Logging";
 
 const createAuthor = async (
   req: Request,
@@ -9,12 +10,10 @@ const createAuthor = async (
 ) => {
   try {
     const { name } = req.body;
-
     const author = new Author({
-      _id: mongoose.Types.ObjectId,
+      _id: new mongoose.Types.ObjectId(),
       name,
     });
-
     const savedAuthor = await author.save();
 
     return res.status(200).json({ author: savedAuthor });
